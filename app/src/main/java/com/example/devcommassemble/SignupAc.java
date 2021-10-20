@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignupAc extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class SignupAc extends AppCompatActivity {
     private AppCompatButton signup;
     String emailPattern= "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
     FirebaseAuth Auth;
+    FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class SignupAc extends AppCompatActivity {
             }
         });
      Auth = FirebaseAuth.getInstance();
-
+     database = FirebaseFirestore.getInstance();
      signup.setEnabled(false);
 
 
@@ -128,6 +131,8 @@ public class SignupAc extends AppCompatActivity {
           @Override
 
           public void onClick(View view) {
+
+              String userdata = name.getText().toString();
               signup.setEnabled(false);
               if(email.getText().toString().trim().matches(emailPattern)){
                   if(password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
@@ -135,18 +140,30 @@ public class SignupAc extends AppCompatActivity {
                       String emaildata = email.getText().toString().trim();
                       String passworddata = password.getText().toString().trim();
 
+                      User user = new User();
+                      user.setEmail(emaildata);
+                      user.setPassword(passworddata);
+                      user.setUsername(userdata);
+
                       Auth.createUserWithEmailAndPassword(emaildata , passworddata).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                           @Override
                           public void onComplete(@NonNull Task<AuthResult> task) {
 
                               if(task.isSuccessful()){
+                                  database.collection("User")
+                                          .document().set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                      @Override
+                                      public void onSuccess(Void unused) {
+                                          Toast.makeText(SignupAc.this, "User Data Created Successfull", Toast.LENGTH_SHORT).show();
+                                      }
+                                  });
 
                                  Auth.signInWithEmailAndPassword(emaildata,passworddata).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                      @Override
                                      public void onComplete(@NonNull Task<AuthResult> task) {
                                          if(task.isSuccessful()){
 
-                                             Toast.makeText(SignupAc.this, "Successfully Logged In", Toast.LENGTH_LONG).show();
+                                             Toast.makeText(SignupAc.this, "Successfully Logged In", Toast.LENGTH_SHORT).show();
                                              Intent in = new Intent(SignupAc.this,MainActivity.class);
                                              startActivity(in);
                                              finish();

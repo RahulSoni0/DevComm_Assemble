@@ -42,6 +42,13 @@ public class SigninAc extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        signuprd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SigninAc.this,SignupAc.class);
+                startActivity(intent);
+            }
+        });
 
 
 

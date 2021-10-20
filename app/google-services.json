@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "519392420732",
+    "project_id": "devcomm-assemble",
+    "storage_bucket": "devcomm-assemble.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519392420732:android:27dee02457a68d8584baf9",
+        "android_client_info": {
+          "package_name": "com.example.devcommassemble"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519392420732-5f387chlks6sbf4623g1jm2pdvpc33m4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2H6qwbagJIh6tGx7B40ICi910n3xkkBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519392420732-5f387chlks6sbf4623g1jm2pdvpc33m4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
